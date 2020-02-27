@@ -1,10 +1,10 @@
-function [t, x] = meuler(f, intervalo, x0, N)
-% Explicit Euler method.
+function [t, x] = meulermod(f, intervalo, x0, N)
+% Explicit Modified Euler method.
 %
-% La funcion meuler resuelve un problema de valor inicial de la forma
+% La funcion meulermod resuelve un problema de valor inicial de la forma
 % x'=f(t,x) en [t0,T]
 % x(t0)=x0,
-% con x0 en R^n, mediante el metodo de Euler (explicito).
+% con x0 en R^n, mediante el metodo de Euler modificado (explicito).
 %
 % ENTRADA:
 % f: nombre de la funcion (definida en formato anonimo o como fichero de tipo funcion de MATLAB)
@@ -27,7 +27,9 @@ t = intervalo(1): h: intervalo(2);
 x = zeros(dim, N + 1);
 x(:, 1) = x0;
 for i = 1:N
-    x(:, i + 1) = x(:, i) + h * f(t(i), x(:, i));
+    F1 = f(t(i), x(:, i));
+    F2 = f(t(i) + h / 2, x(:, i) + (h / 2) * F1);
+    x(:, i + 1) = x(:, i) + h * F2;
 end
 t = t(:);  % Convertimos t en vector columna del tipo (N+1, 1)
 x = transpose(x);  % x = x.';  % Convertimos la matriz x en una del tipo (N+1, n)
