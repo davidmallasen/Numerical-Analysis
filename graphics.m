@@ -20,7 +20,7 @@ if dim > 1
     if dim == 2
         plot(x(:, 1), x(:, 2), 'r')
     else  % dim == 3
-        plot(x(:, 1), x(:, 2), x(:, 3), 'r')
+        plot3(x(:, 1), x(:, 2), x(:, 3), 'r')
     end
     title("Trajectory of the solution")
 end
