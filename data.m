@@ -25,7 +25,7 @@
 % interval = [0, 10];
 % x0 = [0, 1];
 % N = 1000;
-% exact = @(t) [exp(-0.1.*t).*sin(2.*t), exp(-0.1.*t).*cos(2.*t)];
+% exact = @(t) [exp(-0.1*t).*sin(2*t), exp(-0.1*t).*cos(2*t)];
 
 % % Pr2 Ej11b
 % f = @(t, x) [x(2); cos(3*t) - 2*x(1)];
