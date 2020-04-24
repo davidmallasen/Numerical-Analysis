@@ -1,10 +1,10 @@
-function [t, x] = mab2(f, intervalo, x0, N)
-% Metodo de Adams-Bashforth de 2 pasos.
+function [t, x] = mmilne(f, intervalo, x0, N)
+% Metodo de Milne de 4 pasos explicito.
 %
-% La funcion mab2 resuelve un problema de valor inicial de la forma
+% La funcion mmilne resuelve un problema de valor inicial de la forma
 % x'=f(t,x) en [t0,T]
 % x(t0)=x0,
-% con x0 en R^n, mediante el metodo de Adams-Bashforth de 2 pasos.
+% con x0 en R^n, mediante el metodo de Milne de 4 pasos explicito.
 %
 % ENTRADA:
 % f: nombre de la funcion (definida en formato anonimo o como fichero de tipo funcion de MATLAB)
@@ -24,20 +24,22 @@ h = (intervalo(2) - intervalo(1)) / N;
 t = intervalo(1): h: intervalo(2);
 
 % Calculamos los r-1 primeros valores
-[~, xr] = meuler(f, [t(1), t(2)], x0, 1);
+[~, xr] = mrk3(f, [t(1), t(4)], x0, 3);
 
 x = zeros(dim, N + 1);
-ev = zeros(dim, 2); % Guardamos las evaluaciones de f
+ev = zeros(dim, 3); % Guardamos las evaluaciones de f
 
-x(:, 1:2) = transpose(xr); % Pasamos a filas
-ev(:, 1) = f(t(1), x(:, 1));
-for i = 1:N - 1
+x(:, 1:4) = transpose(xr); % Pasamos a filas
+ev(:, 1) = f(t(2), x(:, 2));
+ev(:, 2) = f(t(3), x(:, 3));
+for i = 1:N - 3
     % Indices circulares sobre ev
-    j = mod(i, 2) + 1;
-    k = mod(i + 1, 2) + 1;
-    ev(:, j) = f(t(i + 1), x(:, i + 1));
+    j1 = mod(i + 2, 3) + 1;
+    j2 = mod(i, 3) + 1;
+    j3 = mod(i + 1, 3) + 1;
+    ev(:, j3) = f(t(i + 3), x(:, i + 3));
     
-    x(:, i + 2) = x(:, i + 1) + (h / 2) * (3 * ev(:, j) - ev(:, k));
+    x(:, i + 4) = x(:, i) + (4 * h / 3) * (2 * ev(:, j3) - ev(:, j2) + 2 * ev(:, j1));
 end
 
 t = t(:);  % Convertimos t en vector columna del tipo (N+1, 1)
