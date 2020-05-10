@@ -58,7 +58,7 @@ for i = 1:N - r + 1
     
     % Evaluacion de la iteracion anterior, asi nos evitamos una evaluacion
     % innecesaria al final (vease el paso 4 del algoritmo de los apuntes)
-    ev(:, j(1)) = f(t(i + r - 1), x(:, i + r - 1)); 
+    ev(:, j(r - 1)) = f(t(i + r - 1), x(:, i + r - 1)); 
     
     % Prediccion
     x(:, i + 2) = x(:, i + 1) + (h / 2) * (3 * ev(:, j(1)) - ev(:, j0));
