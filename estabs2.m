@@ -13,7 +13,7 @@ t = intervalo(1): h: intervalo(2);
 x = zeros(1, N + 1);
 x(:, 1) = x0;
 for i = 1:N
-    x(:, i + 1) = (x(:, i) + cos(t(i))) / (1 + h * mu);
+    x(:, i + 1) = (x(:, i) + mu * h * cos(t(i + 1))) / (1 + h * mu);
 end
 t = t(:);  % Convertimos t en vector columna del tipo (N+1, 1)
 x = transpose(x);
